@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    private ProductRepository repository;
+    private final ProductRepository repository;
 
     public List<ProductDTO> getAll(){
         var products = repository.findAll();

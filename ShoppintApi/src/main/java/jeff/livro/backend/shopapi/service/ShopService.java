@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ShopService {
-    private final ShopRepository repository;
+    private ShopRepository repository;
 
     public List<ShopDTO> getAll(){
         List<Shop> shops = repository.findAll();

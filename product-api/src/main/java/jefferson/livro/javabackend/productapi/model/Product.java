@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name="product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

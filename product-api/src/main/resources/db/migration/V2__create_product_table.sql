@@ -1,3 +1,5 @@
+create schema if not exists products;
+
 create table products.product(
     id bigserial primary key,
     product_identifier varchar not null,

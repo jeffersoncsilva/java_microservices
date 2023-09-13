@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
-    private ProductService service;
+    private final ProductService service;
     @GetMapping
     public List<ProductDTO> getProducts(){
         return service.getAll();
@@ -26,8 +26,8 @@ public class ProductController {
     }
 
     @GetMapping("/{productIdentifier}")
-    public ProductDTO findById(@PathVariable String pi){
-        return service.findByProductIdentifier(pi);
+    public ProductDTO findById(@PathVariable String productIdentifier){
+        return service.findByProductIdentifier(productIdentifier);
     }
 
     @PostMapping
