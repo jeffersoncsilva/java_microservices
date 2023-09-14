@@ -1,8 +1,11 @@
 package jefferson.livro.javabackend.productapi.service;
 
 import dtos.ProductDTO;
+import exceptions.CategoryNotFoundException;
+import exceptions.ProductNotFoundException;
 import jefferson.livro.javabackend.productapi.dtoconverters.DTOConverter;
 import jefferson.livro.javabackend.productapi.model.Product;
+import jefferson.livro.javabackend.productapi.repository.CategoryRepository;
 import jefferson.livro.javabackend.productapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository repository;
-
+    private final CategoryRepository categoryRepository;
     public List<ProductDTO> getAll(){
         var products = repository.findAll();
         return products.stream().map(DTOConverter::convert).collect(Collectors.toList());
@@ -32,10 +35,13 @@ public class ProductService {
         var p = repository.findByProductIdentifier(pi);
         if(p != null)
             return DTOConverter.convert(p);
-        return null;
+        throw new ProductNotFoundException();
     }
 
     public ProductDTO save(ProductDTO p){
+        Boolean existsCategory = categoryRepository.existsById(p.getCategoryDTO().getId());
+        if(!existsCategory)
+            throw new CategoryNotFoundException();
         var product = repository.save(DTOConverter.convert(p));
         return DTOConverter.convert(product);
     }
@@ -44,6 +50,8 @@ public class ProductService {
         Optional<Product> p = repository.findById(id);
         if(p.isPresent())
             repository.delete(p.get());
+        else
+            throw new ProductNotFoundException();
     }
 
     public ProductDTO editProduct(long id, ProductDTO dto){

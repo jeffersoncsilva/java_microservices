@@ -1,5 +1,6 @@
 package jefferson.livro.javabackend.service;
 
+import exceptions.UserNotFoundException;
 import jefferson.livro.javabackend.dtoconverters.DTOConverter;
 import jefferson.livro.javabackend.model.User;
 import jefferson.livro.javabackend.repository.UserRepository;
@@ -37,7 +38,7 @@ public class UserService {
         if (user != null) {
             return DTOConverter.convert(user);
         }
-        return null;
+        throw new UserNotFoundException();
     }
     public List<UserDTO> queryByName(String name) {
         List<User> usuarios = userRepository.queryByNomeLike(name);

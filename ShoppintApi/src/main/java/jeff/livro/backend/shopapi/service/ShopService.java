@@ -1,11 +1,13 @@
 package jeff.livro.backend.shopapi.service;
 
+import dtos.ItemDTO;
+import dtos.ProductDTO;
 import dtos.ShopDTO;
 import jeff.livro.backend.shopapi.dtoconverters.DTOConverter;
 import jeff.livro.backend.shopapi.dtos.ShopReportDTO;
 import jeff.livro.backend.shopapi.models.Shop;
 import jeff.livro.backend.shopapi.repository.ShopRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,9 +16,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ShopService {
+    @Autowired
     private ShopRepository repository;
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     public List<ShopDTO> getAll(){
         List<Shop> shops = repository.findAll();
@@ -41,11 +48,26 @@ public class ShopService {
     }
 
     public ShopDTO save(ShopDTO dto){
+        if(userService.getUserByCpf(dto.getUserIdentifier()) == null){
+            return null;
+        }
+        if(!validateProducts(dto.getItems()))
+            return null;
+
         dto.setTotal(dto.getItems().stream().map(x -> x.getPrice()).reduce((float)9, Float::sum));
         Shop shop = DTOConverter.convert(dto);
         shop.setDate(LocalDateTime.now());
         shop = repository.save(shop);
         return DTOConverter.convert(shop);
+    }
+
+    private boolean validateProducts(List<ItemDTO> items){
+        for(ItemDTO item : items){
+            ProductDTO pdto = productService.getProductByIdentifier(item.getProductIdentifier());
+            if(pdto == null)
+                return false;
+        }
+        return true;
     }
 
     public List<ShopDTO> getShopsByFilter(LocalDate dataInicio, LocalDate dataFim, Float valorMinimo){
