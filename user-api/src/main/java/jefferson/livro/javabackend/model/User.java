@@ -22,6 +22,7 @@ public class User {
     private long id;
     private String nome;
     private String cpf;
+    private String key;
     private String endereco;
     private String email;
     private String telefone;

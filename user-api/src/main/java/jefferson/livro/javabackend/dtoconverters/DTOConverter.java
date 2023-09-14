@@ -12,6 +12,7 @@ public class DTOConverter {
         dto.setEndereco(u.getEndereco());
         dto.setTelefone(u.getTelefone());
         dto.setDataCadastro(u.getDataCadastro());
+        dto.setKey(u.getKey());
         return dto;
     }
     public static User convert(UserDTO dto){
@@ -22,6 +23,7 @@ public class DTOConverter {
         user.setEndereco(dto.getEmail());
         user.setEndereco(dto.getEndereco());
         user.setTelefone(dto.getTelefone());
+        user.setKey(dto.getKey());
         return user;
     }
 }

@@ -47,8 +47,8 @@ public class ShopService {
         return null;
     }
 
-    public ShopDTO save(ShopDTO dto){
-        if(userService.getUserByCpf(dto.getUserIdentifier()) == null){
+    public ShopDTO save(ShopDTO dto, String key){
+        if(userService.getUserByCpf(dto.getUserIdentifier(), key) == null){
             return null;
         }
         if(!validateProducts(dto.getItems()))
