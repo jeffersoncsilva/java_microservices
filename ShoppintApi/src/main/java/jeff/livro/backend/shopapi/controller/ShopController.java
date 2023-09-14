@@ -1,13 +1,16 @@
 package jeff.livro.backend.shopapi.controller;
 
 
+import dtos.ShopDTO;
 import jakarta.validation.Valid;
-import jeff.livro.backend.shopapi.dtos.ShopDTO;
+import jeff.livro.backend.shopapi.dtos.ShopReportDTO;
 import jeff.livro.backend.shopapi.service.ShopService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,5 +42,18 @@ public class ShopController {
     @ResponseStatus(HttpStatus.CREATED)
     public ShopDTO newShop(@Valid @RequestBody ShopDTO dto){
         return service.save(dto);
+    }
+
+    @GetMapping("/shopping/search")
+    public List<ShopDTO> getShopsByFilter(@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate dataInicio,
+                                          @RequestParam(name = "dataFim", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate dataFim,
+                                          @RequestParam(name = "valorMinimo", required = false) Float valorMinimo){
+        return service.getShopsByFilter(dataInicio, dataFim, valorMinimo);
+    }
+
+    @GetMapping("/shopping/report")
+    public ShopReportDTO getReportByDate(@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate dataInicio,
+                                         @RequestParam(name = "dataFim", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy")LocalDate dataFim){
+        return service.getReportByDate(dataInicio, dataFim);
     }
 }

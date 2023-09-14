@@ -1,6 +1,7 @@
 package jefferson.livro.javabackend.productapi.service;
 
-import jefferson.livro.javabackend.productapi.dto.ProductDTO;
+import dtos.ProductDTO;
+import jefferson.livro.javabackend.productapi.dtoconverters.DTOConverter;
 import jefferson.livro.javabackend.productapi.model.Product;
 import jefferson.livro.javabackend.productapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,24 +20,24 @@ public class ProductService {
 
     public List<ProductDTO> getAll(){
         var products = repository.findAll();
-        return products.stream().map(ProductDTO::convert).collect(Collectors.toList());
+        return products.stream().map(DTOConverter::convert).collect(Collectors.toList());
     }
 
     public List<ProductDTO> getProductByCategoryId(Long categoryId){
         var p = repository.getProductByCategory(categoryId);
-        return p.stream().map(ProductDTO::convert).collect(Collectors.toList());
+        return p.stream().map(DTOConverter::convert).collect(Collectors.toList());
     }
 
     public ProductDTO findByProductIdentifier(String pi){
         var p = repository.findByProductIdentifier(pi);
         if(p != null)
-            return ProductDTO.convert(p);
+            return DTOConverter.convert(p);
         return null;
     }
 
     public ProductDTO save(ProductDTO p){
-        var product = repository.save(Product.convert(p));
-        return ProductDTO.convert(product);
+        var product = repository.save(DTOConverter.convert(p));
+        return DTOConverter.convert(product);
     }
 
     public void delete(long id){
@@ -52,11 +53,11 @@ public class ProductService {
         if(dto.getPreco() != null)
             p.setPreco(dto.getPreco());
 
-        return ProductDTO.convert(repository.save(p));
+        return DTOConverter.convert(repository.save(p));
     }
 
     public Page<ProductDTO> getAllPage(Pageable page){
         Page<Product> users = repository.findAll(page);
-        return users.map(ProductDTO::convert);
+        return users.map(DTOConverter::convert);
     }
 }

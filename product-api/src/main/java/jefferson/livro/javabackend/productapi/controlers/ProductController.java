@@ -1,13 +1,13 @@
 package jefferson.livro.javabackend.productapi.controlers;
 
+import dtos.ProductDTO;
 import jakarta.validation.Valid;
-import jefferson.livro.javabackend.productapi.dto.ProductDTO;
 import jefferson.livro.javabackend.productapi.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @RestController

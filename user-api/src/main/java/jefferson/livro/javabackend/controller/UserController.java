@@ -1,7 +1,7 @@
 package jefferson.livro.javabackend.controller;
 
+import dtos.UserDTO;
 import jakarta.validation.Valid;
-import jefferson.livro.javabackend.dto.UserDTO;
 import jefferson.livro.javabackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

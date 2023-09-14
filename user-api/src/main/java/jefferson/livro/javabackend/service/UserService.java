@@ -1,11 +1,11 @@
 package jefferson.livro.javabackend.service;
 
-import jefferson.livro.javabackend.dto.UserDTO;
+import jefferson.livro.javabackend.dtoconverters.DTOConverter;
 import jefferson.livro.javabackend.model.User;
 import jefferson.livro.javabackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import dtos.UserDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,32 +16,32 @@ public class UserService {
     private final UserRepository userRepository;
     public List<UserDTO> getAll() {
         List<User> usuarios = userRepository.findAll();
-        return usuarios.stream().map(UserDTO::convert).collect(Collectors.toList());
+        return usuarios.stream().map(DTOConverter::convert).collect(Collectors.toList());
     }
     public UserDTO findById(long userId) {
         User usuario = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User	not	found"));
-        return UserDTO.convert(usuario);
+        return DTOConverter.convert(usuario);
     }
     public UserDTO save(UserDTO userDTO) {
         userDTO.setDataCadastro(LocalDateTime.now());
-        User user = userRepository.save(User.convert(userDTO));
-        return UserDTO.convert(user);
+        User user = userRepository.save(DTOConverter.convert(userDTO));
+        return DTOConverter.convert(user);
     }
     public UserDTO delete(long userId) {
         User user = userRepository.findById(userId).orElseThrow(RuntimeException::new);
         userRepository.delete(user);
-        return UserDTO.convert(user);
+        return DTOConverter.convert(user);
     }
     public UserDTO findByCpf(String cpf) {
         User user = userRepository.findByCpf(cpf);
         if (user != null) {
-            return UserDTO.convert(user);
+            return DTOConverter.convert(user);
         }
         return null;
     }
     public List<UserDTO> queryByName(String name) {
         List<User> usuarios = userRepository.queryByNomeLike(name);
-        return usuarios.stream().map(UserDTO::convert).collect(Collectors.toList());
+        return usuarios.stream().map(DTOConverter::convert).collect(Collectors.toList());
     }
 
     public UserDTO editUser(Long userId, UserDTO userDTO) {
@@ -56,6 +56,6 @@ public class UserService {
             user.setEndereco(userDTO.getEndereco());
         }
         user = userRepository.save(user);
-        return UserDTO.convert(user);
+        return DTOConverter.convert(user);
     }
 }
