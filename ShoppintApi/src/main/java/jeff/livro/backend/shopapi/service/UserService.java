@@ -2,13 +2,15 @@ package jeff.livro.backend.shopapi.service;
 
 import dtos.UserDTO;
 import exceptions.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
 public class UserService {
-    private String userApiURL = "http://localhost:8080";
+    @Value("${USER_API_URL:http://localhost:8080}")
+    private String userApiURL;
 
     public UserDTO getUserByCpf(String cpf, String key){
         try{

@@ -15,6 +15,7 @@
     <description>API baseada no livro Backend com Java</description>
     <properties>
         <java.version>17</java.version>
+        <docker.image.prefix>loja</docker.image.prefix>
     </properties>
     <dependencies>
         <dependency>
@@ -115,6 +116,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.9</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                </configuration>
             </plugin>
         </plugins>
 
