@@ -1,10 +1,11 @@
 package jefferson.livro.javabackend.controller;
 
-import dtos.UserDTO;
+import dtos.user.UserDTO;
 import jakarta.validation.Valid;
 import jefferson.livro.javabackend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,34 +18,26 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
-    public List<UserDTO> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<UserDTO>> pegaTodosUsuarios() {
+        var user =  service.pegaTodosUsuarios();
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")
-    public UserDTO findById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<UserDTO> buscaUsuarioPorId(@PathVariable Long id) {
+        var userDto = service.buscaUsuarioPorId(id);
+        return ResponseEntity.ok(userDto);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO newUser(@RequestBody @Valid UserDTO userDTO) {
-        return service.save(userDTO);
-    }
-
-    @GetMapping("/{cpf}/cpf")
-    public UserDTO findByCpf(@RequestParam(name="key", required = true) String key, @PathVariable String cpf) {
-        return service.findByCpfAndKey(cpf, key);
+    public UserDTO cadatraNovoUsuario(@RequestBody @Valid UserDTO userDTO) {
+        return service.cadastraNovoUsuario(userDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public void apagaUmUsuario(@PathVariable Long id) {
         service.delete(id);
-    }
-
-    @GetMapping("/search")
-    public List<UserDTO> queryByName(@RequestParam(name = "nome", required = true) String nome) {
-        return service.queryByName(nome);
     }
 }
