@@ -1,1 +1,0 @@
-alter table users.user add column password varchar(256) default '123' not null;

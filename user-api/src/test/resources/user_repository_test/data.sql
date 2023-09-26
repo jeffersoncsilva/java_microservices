@@ -14,3 +14,6 @@ insert into users.user(nome, senha, cpf, email, telefone, endereco, data_cadastr
 
 insert into users.user(nome, senha, cpf, email, telefone, endereco, data_cadastro) values
 ('Teste 3', '12345678', '480.329.540-90', 'email3@email.com', '(11) 1111-1111', 1, '2021-01-01 00:00');
+
+insert into users.user(nome, senha, cpf, email, telefone, endereco, data_cadastro) values
+('Teste 4', '12345678', '963.035.030-04', 'email4@email.com', '(11) 1111-1111', 1, '2021-01-01 00:00');

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -42,9 +43,10 @@ class UserRepositoryTest {
 
     @Test
     @Transactional
+    @Sql("/user_repository_test/data.sql")
     public void quando_listarTodosUsuariosComBancoSomenteCom3Usuarios_deveRetornarUmaListaCom3UsuariosApenas(){
         var lista = userRepository.findAll();
-        assertEquals(3, lista.size());
+        assertEquals(4, lista.size());
     }
 
     @Test
@@ -53,7 +55,7 @@ class UserRepositoryTest {
         userRepository.save(getUser("747.137.420-90"));
         userRepository.save(getUser("985.724.350-93"));
         var lista = userRepository.findAll();
-        assertEquals(5, lista.size());
+        assertEquals(2, lista.size());
     }
 
     @Test
@@ -64,8 +66,8 @@ class UserRepositoryTest {
         user.setNome("Jefferson");
         userRepository.save(user);
         var lista = userRepository.findAll();
-        assertEquals(4, lista.size());
-        assertEquals("Jefferson", lista.get(3).getNome());
+        assertEquals(1, lista.size());
+        assertEquals("Jefferson", lista.get(0).getNome());
     }
 
     @Test
@@ -75,10 +77,11 @@ class UserRepositoryTest {
         userRepository.save(user);
         userRepository.delete(user);
         var lista = userRepository.findAll();
-        assertEquals(3, lista.size());
+        assertEquals(0, lista.size());
     }
 
     @Test
+    @Sql("/user_repository_test/data.sql")
     public void quando_buscarPeloNomeTeste_deveRetornar3UsuariosDeTeste(){
         var lista = userRepository.queryByNomeLike("Teste");
         assertEquals(1, lista.size());
