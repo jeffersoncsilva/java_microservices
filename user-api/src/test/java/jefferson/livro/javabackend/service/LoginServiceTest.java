@@ -28,10 +28,10 @@ class LoginServiceTest {
         dto.setPassword("123");
         dto.setEmail("email@email.com");
         dto.setCpf(null);
-        Mockito.when(loginRepository.findByEmailAndPassword(Mockito.anyString(), Mockito.anyString())).thenReturn(new User());
+        Mockito.when(loginRepository.findByEmailAndSenha(Mockito.anyString(), Mockito.anyString())).thenReturn(new User());
         UserTokenDTO token = loginService.realizaLogin(dto);
-        Mockito.verify(loginRepository, Mockito.times(0)).findByCpfAndPassword(Mockito.anyString(), Mockito.anyString());
-        Mockito.verify(loginRepository, Mockito.times(1)).findByEmailAndPassword(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(loginRepository, Mockito.times(0)).findByCpfAndSenha(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(loginRepository, Mockito.times(1)).findByEmailAndSenha(Mockito.anyString(), Mockito.anyString());
     }
 
     @Test
@@ -40,10 +40,10 @@ class LoginServiceTest {
         dto.setPassword("123");
         dto.setEmail(null);
         dto.setCpf("123");
-        Mockito.when(loginRepository.findByCpfAndPassword(Mockito.anyString(), Mockito.anyString())).thenReturn(new User());
+        Mockito.when(loginRepository.findByCpfAndSenha(Mockito.anyString(), Mockito.anyString())).thenReturn(new User());
         UserTokenDTO token = loginService.realizaLogin(dto);
-        Mockito.verify(loginRepository, Mockito.times(1)).findByCpfAndPassword(Mockito.anyString(), Mockito.anyString());
-        Mockito.verify(loginRepository, Mockito.times(0)).findByEmailAndPassword(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(loginRepository, Mockito.times(1)).findByCpfAndSenha(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(loginRepository, Mockito.times(0)).findByEmailAndSenha(Mockito.anyString(), Mockito.anyString());
     }
 
     @Test
@@ -52,7 +52,7 @@ class LoginServiceTest {
         dto.setPassword("123");
         dto.setEmail(null);
         dto.setCpf("123");
-        Mockito.when(loginRepository.findByCpfAndPassword(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
+        Mockito.when(loginRepository.findByCpfAndSenha(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
         assertThrows(UsuarioLoginOrPasswordWrongException.class, () -> {
             UserTokenDTO token = loginService.realizaLogin(dto);
         });

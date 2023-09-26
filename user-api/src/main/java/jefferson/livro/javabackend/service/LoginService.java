@@ -17,9 +17,9 @@ public class LoginService {
     public UserTokenDTO realizaLogin(UserLoginDTO login){
         User usuario;
         if(login.getEmail() != null){
-            usuario = loginRepository.findByEmailAndPassword(login.getEmail(), login.getPassword());
+            usuario = loginRepository.findByEmailAndSenha(login.getEmail(), login.getPassword());
         }else{
-            usuario =  loginRepository.findByCpfAndPassword(login.getCpf(), login.getPassword());
+            usuario =  loginRepository.findByCpfAndSenha(login.getCpf(), login.getPassword());
         }
 
         if(usuario == null){

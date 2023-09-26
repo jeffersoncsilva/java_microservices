@@ -3,10 +3,9 @@ package jefferson.livro.javabackend.repository;
 import jefferson.livro.javabackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface
-UserLoginRepository extends JpaRepository<User, Long> {
+public interface UserLoginRepository extends JpaRepository<User, Long> {
 
-    User findByCpfAndPassword(String cpf, String password);
+    User findByCpfAndSenha(String cpf, String password);
 
-    User findByEmailAndPassword(String email, String password);
+    User findByEmailAndSenha(String email, String password);
 }

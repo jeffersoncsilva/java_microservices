@@ -17,10 +17,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-    private String password;
+    private String senha;
     private Cpf cpf;
-    @OneToOne
-    @JoinColumn(name="endereco_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="endereco", referencedColumnName = "id")
     private Endereco endereco;
     private Email email;
     private Telefone telefone;

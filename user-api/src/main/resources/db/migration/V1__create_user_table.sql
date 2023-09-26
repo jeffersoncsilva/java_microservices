@@ -3,7 +3,7 @@ create schema if not exists users;
 create table users.endereco(
     id bigserial primary key,
     cep varchar(8) not null,
-    logradouro varchar(100) not null,
+    rua varchar(100) not null,
     numero varchar(10) not null,
     complemento varchar(100),
     bairro varchar(100) not null,
@@ -18,6 +18,6 @@ create table users.user(
     cpf varchar(14) not null unique,
     email varchar(100) not null unique,
     telefone varchar(15) not null,
-    endereco bigserial foreign key references users.endereco(id),
+    endereco bigint references users.endereco(id),
     data_cadastro timestamp not null
 );

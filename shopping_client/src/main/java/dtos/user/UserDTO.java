@@ -18,6 +18,8 @@ public class UserDTO {
     private String nome;
     @NotNull(message = "CPF é obrigatório.")
     private CpfDTO cpf;
+    @NotNull(message = "Senha é obrigatório.")
+    private String password;
     private EnderecoDTO endereco;
     @NotNull(message = "E-mail e obrigatório.")
     private EmailDTO email;
