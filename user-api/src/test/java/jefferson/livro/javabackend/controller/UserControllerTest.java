@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dtos.user.UserDTO;
+import jefferson.livro.javabackend.Utils;
 import jefferson.livro.javabackend.dtoconverters.DTOConverter;
 import jefferson.livro.javabackend.service.UserService;
 import jefferson.livro.javabackend.service.UserServiceTest;
@@ -71,7 +72,8 @@ class UserControllerTest {
 
     @Test
     public void quando_cadastrarNovoUsuario_deveRetornarEsseUsuarioCadastrado() throws Exception{
-        UserDTO user = DTOConverter.convert(UserServiceTest.getUser(1, "Nome 1", "123"));
+        UserDTO user = DTOConverter.convert(Utils.getUser("924.218.490-04"));
+        user.setSenha("senha");
         Mockito.when(userService.cadastraNovoUsuario(user)).thenReturn(user);
         MvcResult restuls = mockMvc.perform(MockMvcRequestBuilders.post("/user")
                 .contentType(MediaType.APPLICATION_JSON)

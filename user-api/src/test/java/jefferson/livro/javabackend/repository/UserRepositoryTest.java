@@ -42,8 +42,8 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    @Transactional
     @Sql("/user_repository_test/data.sql")
+    @Transactional
     public void quando_listarTodosUsuariosComBancoSomenteCom3Usuarios_deveRetornarUmaListaCom3UsuariosApenas(){
         var lista = userRepository.findAll();
         assertEquals(4, lista.size());
@@ -82,6 +82,7 @@ class UserRepositoryTest {
 
     @Test
     @Sql("/user_repository_test/data.sql")
+    @Transactional
     public void quando_buscarPeloNomeTeste_deveRetornar3UsuariosDeTeste(){
         var lista = userRepository.queryByNomeLike("Teste");
         assertEquals(1, lista.size());

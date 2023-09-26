@@ -1,5 +1,6 @@
 package jefferson.livro.javabackend.service;
 
+import exceptions.UserNotFoundException;
 import jefferson.livro.javabackend.dtoconverters.DTOConverter;
 import jefferson.livro.javabackend.model.User;
 import jefferson.livro.javabackend.repository.UserRepository;
@@ -21,7 +22,7 @@ public class UserService {
         return usuarios.stream().map(DTOConverter::convert).collect(Collectors.toList());
     }
     public UserDTO buscaUsuarioPorId(long userId) {
-        User usuario = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User	not	found"));
+        User usuario = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Usuario nao encontrado na base de dados."));
         return DTOConverter.convert(usuario);
     }
     public UserDTO cadastraNovoUsuario(UserDTO userDTO) {

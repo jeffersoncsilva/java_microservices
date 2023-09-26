@@ -1,6 +1,7 @@
 package jefferson.livro.javabackend.controller;
 
 import dtos.user.UserDTO;
+import exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import jefferson.livro.javabackend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,14 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> buscaUsuarioPorId(@PathVariable Long id) {
-        var userDto = service.buscaUsuarioPorId(id);
-        return ResponseEntity.ok(userDto);
+        UserDTO dto;
+        try{
+            dto = service.buscaUsuarioPorId(id);
+        }catch (UserNotFoundException ex){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping

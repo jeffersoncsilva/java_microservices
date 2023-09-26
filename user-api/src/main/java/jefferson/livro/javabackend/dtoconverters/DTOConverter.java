@@ -22,7 +22,7 @@ public class DTOConverter {
         user.setEmail(convert(dto.getEmail()));
         user.setTelefone(convert(dto.getTelefone()));
         user.setEndereco(convert(dto.getEndereco()));
-        user.setSenha(dto.getPassword());
+        user.setSenha(dto.getSenha());
         return user;
     }
     public static Cpf convert(CpfDTO dto){

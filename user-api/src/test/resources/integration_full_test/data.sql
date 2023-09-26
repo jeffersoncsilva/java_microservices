@@ -1,5 +1,5 @@
-delete from users.user;
-delete from users.endereco;
+delete from users.user where 1 = 1;
+delete from users.endereco where 1 = 1;
 
 insert into users.endereco(id, cep, rua, numero, complemento, bairro, cidade, estado) values
 (1, '00000000', 'Rua Teste', '123', 'Apto 123', 'Centro', 'São Paulo', 'SP');
