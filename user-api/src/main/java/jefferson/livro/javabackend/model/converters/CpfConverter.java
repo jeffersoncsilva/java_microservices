@@ -13,6 +13,8 @@ public class CpfConverter implements AttributeConverter<Cpf, String> {
 
     @Override
     public Cpf convertToEntityAttribute(String cpf){
+        if(cpf == null)
+            return null;
         return new Cpf(cpf);
     }
 }

@@ -4,6 +4,7 @@ import dtos.login.UserLoginDTO;
 import dtos.login.UserTokenDTO;
 import exceptions.UsuarioLoginOrPasswordWrongException;
 import jefferson.livro.javabackend.model.Cpf;
+import jefferson.livro.javabackend.model.Email;
 import jefferson.livro.javabackend.model.User;
 import jefferson.livro.javabackend.repository.UserLoginRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class LoginService {
     public UserTokenDTO realizaLogin(UserLoginDTO login){
         User usuario;
         if(login.getEmail() != null){
-            usuario = loginRepository.findByEmailAndSenha(login.getEmail(), login.getPassword());
+            usuario = loginRepository.findByEmailAndSenha(new Email(login.getEmail()), login.getPassword());
         }else{
             usuario =  loginRepository.findByCpfAndSenha(new Cpf(login.getCpf()), login.getPassword());
         }

@@ -4,6 +4,7 @@ import dtos.login.UserLoginDTO;
 import dtos.login.UserTokenDTO;
 import exceptions.UsuarioLoginOrPasswordWrongException;
 import jefferson.livro.javabackend.model.Cpf;
+import jefferson.livro.javabackend.model.Email;
 import jefferson.livro.javabackend.model.User;
 import jefferson.livro.javabackend.repository.UserLoginRepository;
 import org.junit.jupiter.api.Test;
@@ -29,10 +30,10 @@ class LoginServiceTest {
         dto.setPassword("123");
         dto.setEmail("email@email.com");
         dto.setCpf(null);
-        Mockito.when(loginRepository.findByEmailAndSenha(Mockito.anyString(), Mockito.anyString())).thenReturn(new User());
+        Mockito.when(loginRepository.findByEmailAndSenha(Mockito.any(Email.class), Mockito.anyString())).thenReturn(new User());
         UserTokenDTO token = loginService.realizaLogin(dto);
         Mockito.verify(loginRepository, Mockito.times(0)).findByCpfAndSenha(Mockito.any(), Mockito.anyString());
-        Mockito.verify(loginRepository, Mockito.times(1)).findByEmailAndSenha(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(loginRepository, Mockito.times(1)).findByEmailAndSenha(Mockito.any(Email.class), Mockito.anyString());
     }
 
     @Test
@@ -44,7 +45,7 @@ class LoginServiceTest {
         Mockito.when(loginRepository.findByCpfAndSenha(Mockito.any(), Mockito.anyString())).thenReturn(new User());
         UserTokenDTO token = loginService.realizaLogin(dto);
         Mockito.verify(loginRepository, Mockito.times(1)).findByCpfAndSenha(Mockito.any(), Mockito.anyString());
-        Mockito.verify(loginRepository, Mockito.times(0)).findByEmailAndSenha(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(loginRepository, Mockito.times(0)).findByEmailAndSenha(Mockito.any(Email.class), Mockito.anyString());
     }
 
     @Test
